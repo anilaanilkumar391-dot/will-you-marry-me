@@ -122,7 +122,37 @@
         no.addEventListener("click", moveNo);
 
         // Show a happy animation when Yes is clicked
+        function playCuteMusic() {
+    const audio = new (window.AudioContext || window.webkitAudioContext)();
+
+    const notes = [
+        523.25, 659.25, 783.99, 1046.50,
+        783.99, 659.25, 698.46, 880
+    ];
+
+    notes.forEach((frequency, i) => {
+        const note = audio.createOscillator();
+        const volume = audio.createGain();
+        const start = audio.currentTime + i * 0.23;
+
+        note.type = "sine";
+        note.frequency.value = frequency;
+
+        volume.gain.setValueAtTime(0.001, start);
+        volume.gain.linearRampToValueAtTime(0.12, start + 0.04);
+        volume.gain.linearRampToValueAtTime(0.001, start + 0.20);
+
+        note.connect(volume);
+        volume.connect(audio.destination);
+
+        note.start(start);
+        note.stop(start + 0.21);
+    });
+
+    setTimeout(() => audio.close(), 3000);
+}
         yes.addEventListener("click", function() {
+            playCuteMusic();
             document.getElementById("heading").textContent =
                 "Yayyy! I knew it! 🥰";
 
