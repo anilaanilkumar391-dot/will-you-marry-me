@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Marry Me? 💗</title>
+
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(
+                135deg, #ffe4ec, #f8d9ff
+            );
+            overflow: hidden;
+        }
+
+        .card {
+            background: white;
+            padding: 35px 20px;
+            width: 85%;
+            max-width: 400px;
+            text-align: center;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px #d98ab044;
+        }
+
+        h1 {
+            color: #e75480;
+        }
+
+        p {
+            color: #81516a;
+        }
+
+        .buttons {
+            position: relative;
+            height: 100px;
+            margin-top: 25px;
+        }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #yes {
+            background: #ff69a6;
+            color: white;
+        }
+
+        #no {
+            background: #eeeeee;
+            color: #555;
+            position: absolute;
+            left: 55%;
+        }
+
+        .heart {
+            position: fixed;
+            bottom: -40px;
+            animation: floatUp 3s linear forwards;
+            pointer-events: none;
+        }
+
+        @keyframes floatUp {
+            to {
+                transform: translateY(-110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        #message {
+            color: #e75480;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <div style="font-size: 55px;">💌</div>
+
+        <h1 id="heading">Will you marry me?</h1>
+
+        <p id="subtext">
+            I have a little question for you... 💗
+        </p>
+
+        <div class="buttons" id="buttons">
+            <button id="yes">Yes! 💖</button>
+            <button id="no">No 🙈</button>
+        </div>
+
+        <p id="message"></p>
+    </div>
+
+    <script>
+        const yes = document.getElementById("yes");
+        const no = document.getElementById("no");
+        const buttons = document.getElementById("buttons");
+
+        // Make the No button move away
+        function moveNo() {
+            const maxX = buttons.clientWidth - no.offsetWidth;
+            const maxY = buttons.clientHeight - no.offsetHeight;
+
+            no.style.left = Math.random() * maxX + "px";
+            no.style.top = Math.random() * maxY + "px";
+        }
+
+        no.addEventListener("mouseenter", moveNo);
+
+        no.addEventListener("click", moveNo);
+
+        // Show a happy animation when Yes is clicked
+        yes.addEventListener("click", function() {
+            document.getElementById("heading").textContent =
+                "Yayyy! I knew it! 🥰";
+
+            document.getElementById("subtext").textContent =
+                "You made this moment so special! 💕";
+
+            document.getElementById("message").textContent =
+                "Sending you lots of love! 💗✨";
+
+            buttons.style.display = "none";
+
+            // Create floating hearts
+            for (let i = 0; i < 40; i++) {
+                const heart = document.createElement("span");
+
+                heart.className = "heart";
+                heart.textContent = ["💗", "💖", "💕", "❤️", "✨"][
+                    Math.floor(Math.random() * 5)
+                ];
+
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.fontSize =
+                    (20 + Math.random() * 20) + "px";
+
+                heart.style.animationDelay =
+                    Math.random() * 2 + "s";
+
+                document.body.appendChild(heart);
+
+                setTimeout(() => heart.remove(), 5000);
+            }
+        });
+    </script>
+</body>
+</html>
